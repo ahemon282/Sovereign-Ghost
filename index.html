@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sovereign Ghost | Institutional Node</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        qubic: '#7c3aed', bg: '#f3f4f6', card: '#ffffff', text: '#111827',
+                        success: '#059669', danger: '#dc2626', warn: '#d97706'
+                    },
+                    fontFamily: { mono: ['Courier New', 'monospace'], sans: ['Inter', 'system-ui', 'sans-serif'] },
+                    animation: { 'bounce-in': 'bounceIn 0.5s cubic-bezier(0.8, 0, 0.2, 1) forwards' },
+                    keyframes: {
+                        bounceIn: {
+                            '0%': { transform: 'scale(0.3)', opacity: '0' },
+                            '50%': { transform: 'scale(1.05)' },
+                            '70%': { transform: 'scale(0.9)' },
+                            '100%': { transform: 'scale(1)', opacity: '1' }
+                        }
+                    },
+                    boxShadow: {
+                        'crisp': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                        'glow': '0 0 15px rgba(124, 58, 237, 0.3)'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #f3f4f6;
+            color: #111827;
+            font-family: 'Inter', sans-serif;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 320px 1fr 240px;
+            grid-template-rows: 70px 1fr;
+            height: 100%;
+            width: 100%;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            box-sizing: border-box;
+        }
+
+        .header-area {
+            grid-column: 1 / -1;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #e5e7eb;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #9ca3af;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #7c3aed;
+        }
+
+        .blur-transition {
+            transition: filter 0.5s ease;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="dashboard-grid blur-transition" id="mainDashboard">
+
+        <nav
+            class="header-area bg-white border border-gray-200 shadow-sm flex justify-between items-center px-8 rounded-xl">
+            <div class="flex items-center gap-3">
+                <div class="w-4 h-4 bg-qubic rounded-full shadow-glow"></div>
+                <h1 class="text-2xl font-black tracking-tighter text-gray-900">SOVEREIGN <span
+                        class="text-qubic">GHOST</span></h1>
+            </div>
+            <div
+                class="flex items-center gap-6 text-xs font-mono font-bold text-gray-500 bg-gray-50 px-4 py-2 rounded-lg border border-gray-200">
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 bg-success rounded-full animate-pulse"></span>
+                    <span class="text-gray-700">QUBIC MAINNET: CONNECTED</span>
+                </div>
+                <div>SESSION ID: <span class="text-gray-900">GHOST-8X92</span></div>
+            </div>
+        </nav>
+
+        <div class="flex flex-col gap-4 overflow-y-auto">
+            <div
+                class="bg-white p-6 rounded-xl border border-gray-200 shadow-crisp hover:border-qubic transition-all duration-300 group">
+                <h2 class="text-gray-400 text-xs font-bold mb-3 uppercase tracking-widest">Total Liquidity</h2>
+                <div class="flex items-baseline gap-2">
+                    <span class="text-4xl font-black text-gray-900 tracking-tight" id="balanceDisplay">1,000,000</span>
+                    <span class="text-qubic font-bold text-sm">QUBIC</span>
+                </div>
+                <div
+                    class="mt-3 flex gap-2 text-xs font-mono font-bold bg-green-50 w-fit px-2 py-1 rounded text-success border border-green-100">
+                    ▲ <span id="pnlDisplay">+0.00%</span> (24h)
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl border border-gray-200 shadow-crisp overflow-hidden relative block"
+                style="height: 220px;">
+                <div class="tradingview-widget-container" style="width: 100%; height: 100%;">
+                    <div class="tradingview-widget-container__widget" style="width: 100%; height: 100%;"></div>
+                    <script type="text/javascript"
+                        src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+                            {
+                                "symbol": "MEXC:QUBICUSDT",
+                                    "width": "100%",
+                                        "height": "100%",
+                                            "locale": "en",
+                                                "dateRange": "1D",
+                                                    "colorTheme": "light",
+                                                        "isTransparent": true,
+                                                            "autosize": true,
+                                                                "largeChartUrl": ""
+                            }
+                        </script>
+                </div>
+
+                <div
+                    class="absolute top-2 right-2 flex items-center gap-1 bg-white/90 border border-gray-300 px-2 py-1 rounded shadow-sm z-10">
+                    <span class="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse"></span>
+                    <span class="text-[9px] font-black text-gray-800 uppercase tracking-wider">LIVE FEED</span>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-crisp flex-1 flex flex-col gap-4">
+                <h2 class="text-gray-400 text-xs font-bold uppercase tracking-widest">Agent Diagnostics</h2>
+                <div class="space-y-4 font-mono text-xs font-semibold">
+                    <div class="flex justify-between p-2 bg-gray-50 rounded"><span class="text-gray-500">Supervisor
+                            Status</span><span id="statusIndicator" class="text-success">● ONLINE</span></div>
+                    <div class="flex justify-between p-2 bg-gray-50 rounded"><span class="text-gray-500">Backend
+                            Port</span><span class="text-gray-900">:8000</span></div>
+                    <div class="flex justify-between p-2 bg-gray-50 rounded"><span class="text-gray-500">Key
+                            Sharding</span><span class="text-qubic">DISTRIBUTED (5/5)</span></div>
+                </div>
+                <div class="mt-auto">
+                    <button onclick="activateProtocol()" id="vacationBtn"
+                        class="w-full py-4 bg-gray-900 text-white rounded-lg font-bold uppercase tracking-wider text-xs hover:bg-qubic hover:shadow-lg transition-all duration-300 transform active:scale-95 shadow-xl">
+                        ▶ INITIALIZE PROTOCOL
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl border border-gray-200 shadow-crisp relative overflow-hidden flex flex-col">
+            <div class="bg-gray-50 border-b border-gray-200 p-3 flex justify-between items-center">
+                <span class="text-xs font-bold text-gray-400 uppercase">Real-Time Execution Log</span>
+                <span class="w-2 h-2 bg-gray-300 rounded-full animate-pulse"></span>
+            </div>
+            <div id="terminalLog"
+                class="flex-1 overflow-y-auto p-4 font-mono text-sm space-y-2 text-gray-600 pb-10 bg-white">
+                <div class="text-gray-400 italic">Connecting to secure local backend...</div>
+            </div>
+        </div>
+
+        <div class="flex flex-col justify-end">
+            <div
+                class="border-2 border-dashed border-red-200 bg-red-50 p-4 rounded-xl text-center h-full flex flex-col justify-center gap-6">
+                <div>
+                    <h3 class="text-danger font-black text-sm uppercase mb-1">Fail-Safe Zone</h3>
+                    <p class="text-[10px] text-gray-500 font-medium leading-tight">Action is irreversible.</p>
+                </div>
+                <button onclick="triggerKillSwitch()"
+                    class="group relative w-full h-48 bg-white border-4 border-danger rounded-xl overflow-hidden transition-all hover:bg-danger hover:scale-105 shadow-xl cursor-pointer">
+                    <div class="absolute inset-0 flex flex-col items-center justify-center z-10">
+                        <div class="text-6xl mb-3 grayscale group-hover:grayscale-0 transition-all duration-300">💀
+                        </div>
+                        <span
+                            class="text-danger font-black group-hover:text-white transition-colors tracking-widest text-base">KILL
+                            SWITCH</span>
+                    </div>
+                    <div
+                        class="absolute inset-0 opacity-5 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImEiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTTAgNDBMMzAgMEg0MEwxMCA0MHptMTAgMEw0MCAwSDB6IiBmaWxsPSIjZmYwMDAwIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2EpIi8+PC9zdmc+')]">
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="killOverlay"
+        class="fixed inset-0 bg-gray-900/90 backdrop-blur-sm z-50 hidden opacity-0 flex items-center justify-center">
+        <div class="text-center" id="killTextContainer">
+            <h1 class="text-8xl font-black mb-6 tracking-tighter text-white drop-shadow-2xl">TERMINATED</h1>
+            <div class="bg-red-600 text-white font-mono font-bold px-4 py-2 inline-block rounded">KEY SHARDS BURNED
+                ON-CHAIN</div>
+        </div>
+        <div id="recoveryForm"
+            class="hidden w-[500px] bg-white border-t-8 border-danger p-8 rounded-xl shadow-2xl relative">
+            <h2 class="text-3xl font-black text-gray-900 mb-2 flex items-center gap-3"><span
+                    class="text-danger text-4xl">🚨</span> EMERGENCY EXIT</h2>
+            <p class="text-gray-500 text-sm mb-8 font-medium">Agent neutralized. Funds frozen. Owner override required.
+            </p>
+            <div class="mb-6 bg-gray-100 p-4 rounded-lg border border-gray-200">
+                <label class="block text-gray-400 text-xs font-black uppercase mb-1">Frozen Capital</label>
+                <div class="text-4xl font-black text-gray-900"><span id="frozenBalance">0.00</span> <span
+                        class="text-qubic text-lg">QUBIC</span></div>
+            </div>
+            <div class="mb-8">
+                <label class="block text-gray-900 text-xs font-bold mb-2 uppercase">Destination (Cold Wallet)</label>
+                <input type="text" id="withdrawAddress" placeholder="Paste Qubic Address..."
+                    class="w-full bg-white border-2 border-gray-200 rounded-lg p-4 text-gray-900 font-mono text-sm focus:border-qubic focus:outline-none transition-colors">
+            </div>
+            <button onclick="confirmWithdrawal()"
+                class="w-full py-4 bg-gray-900 text-white font-bold rounded-lg hover:bg-qubic transition-all shadow-lg text-sm tracking-widest">SIGN
+                & WITHDRAW FUNDS</button>
+        </div>
+        <div id="successReceipt" class="hidden text-center bg-white p-10 rounded-2xl shadow-2xl">
+            <div class="text-7xl mb-6 animate-bounce">✅</div>
+            <h2 class="text-4xl font-black text-gray-900 mb-2">FUNDS SECURED</h2>
+            <p class="text-gray-500 font-mono text-sm font-medium">Transferred to cold storage.</p>
+            <div class="mt-8 p-4 bg-gray-50 rounded-lg border border-gray-200 font-mono text-xs text-gray-400">
+                <p>TX ID: 0x92f...a12</p>
+                <p>SESSION CLOSED</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = "http://127.0.0.1:8000";
+        const logContainer = document.getElementById('terminalLog');
+        let lastLogId = 0;
+        let isDead = false;
+
+        function addLogHTML(msg, type, time) {
+            const div = document.createElement('div');
+            if (type === 'success') div.className = 'text-green-700 bg-green-50 border-l-4 border-green-500 pl-2 py-1 font-medium';
+            else if (type === 'warn') div.className = 'text-amber-600 bg-amber-50 border-l-4 border-amber-500 pl-2 py-1 font-medium';
+            else if (type === 'danger') div.className = 'text-red-600 bg-red-50 border-l-4 border-red-500 pl-2 py-1 font-bold';
+            else if (type === 'profit') div.className = 'text-white bg-qubic rounded px-2 py-1 font-bold shadow-sm inline-block w-full';
+            else div.className = 'text-gray-500';
+            div.innerHTML = `<span class="text-gray-400 font-mono mr-2 text-[10px] opacity-70">${time}</span> ${msg}`;
+            logContainer.appendChild(div);
+            logContainer.scrollTop = logContainer.scrollHeight;
+        }
+
+        function formatNumber(num) {
+            return num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        async function syncState() {
+            if (isDead) return;
+            try {
+                const res = await fetch(`${API_URL}/status`);
+                const data = await res.json();
+                document.getElementById('balanceDisplay').innerText = formatNumber(data.balance);
+                let pnl = ((data.balance - 1000000) / 1000000) * 100;
+                document.getElementById('pnlDisplay').innerText = `+${pnl.toFixed(2)}%`;
+
+                data.logs.forEach(log => {
+                    if (log.id > lastLogId) {
+                        addLogHTML(log.msg, log.type, log.time);
+                        lastLogId = log.id;
+                    }
+                });
+
+                if (data.dead && !isDead) {
+                    triggerKillSwitchUI();
+                }
+            } catch (e) { }
+        }
+
+        setInterval(syncState, 700);
+
+        async function activateProtocol() {
+            const btn = document.getElementById('vacationBtn');
+            btn.innerHTML = "⚡ AUTO-PILOT ACTIVE";
+            btn.classList.remove('bg-gray-900');
+            btn.classList.add('bg-qubic', 'text-white', 'animate-pulse');
+            await fetch(`${API_URL}/initialize`, { method: "POST" });
+        }
+
+        async function triggerKillSwitch() {
+            if (!confirm("⚠️ CONFIRM KILL SWITCH ⚠️\n\nThis will permanently burn your private key shards.\nThis action cannot be undone.")) return;
+            await fetch(`${API_URL}/kill`, { method: "POST" });
+            triggerKillSwitchUI();
+        }
+
+        function triggerKillSwitchUI() {
+            isDead = true;
+            document.getElementById('mainDashboard').style.filter = "blur(15px)";
+            const overlay = document.getElementById('killOverlay');
+            overlay.classList.remove('hidden');
+            overlay.style.opacity = '1';
+            setTimeout(() => {
+                document.getElementById('killTextContainer').classList.add('hidden');
+                const recoveryForm = document.getElementById('recoveryForm');
+                const finalBalance = document.getElementById('balanceDisplay').innerText;
+                document.getElementById('frozenBalance').innerText = finalBalance;
+                recoveryForm.classList.remove('hidden');
+                recoveryForm.classList.add('animate-bounce-in');
+            }, 2500);
+        }
+
+        function confirmWithdrawal() {
+            const addr = document.getElementById('withdrawAddress').value;
+            if (addr.length < 5) { alert("Please enter a valid Qubic address."); return; }
+            const btn = document.querySelector('#recoveryForm button');
+            btn.innerText = "VERIFYING BIOMETRICS...";
+            btn.classList.add('opacity-50', 'cursor-not-allowed');
+            setTimeout(() => {
+                document.getElementById('recoveryForm').classList.add('hidden');
+                document.getElementById('successReceipt').classList.remove('hidden');
+            }, 2000);
+        }
+    </script>
+</body>
+
+</html>
